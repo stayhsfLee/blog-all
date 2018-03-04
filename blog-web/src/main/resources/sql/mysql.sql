@@ -1,0 +1,29 @@
+CREATE TABLE IF NOT EXISTS `user` (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(32) NOT NULL ,
+  password VARCHAR(64) NOT NULL ,
+  email VARCHAR(64),
+  register_time DATETIME NOT NULL ,
+  last_login_time DATETIME NOT NULL ,
+  gmt_create DATETIME NOT NULL ,
+  gmt_modified DATETIME NOT NULL ,
+  PRIMARY KEY (id)
+)CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `article` (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  title VARCHAR(64) NOT NULL ,
+  creator BIGINT NOT NULL ,
+  gmt_create DATETIME NOT NULL ,
+  gmt_modified DATETIME NOT NULL ,
+  PRIMARY KEY (id)
+)CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `article_content` (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  content TEXT NOT NULL ,
+  gmt_create DATETIME NOT NULL ,
+  gmt_modified DATETIME NOT NULL ,
+  PRIMARY KEY (id)
+)CHARACTER SET = utf8;
+
