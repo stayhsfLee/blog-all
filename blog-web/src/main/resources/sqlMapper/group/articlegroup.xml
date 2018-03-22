@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thenorthw.blog.common.dao.group.ArticleGroupDao">
+
+    <resultMap id="ArticleGroupMap" type="ArticleGroup">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="parent_group_id" property="parentGroupId" jdbcType="BIGINT"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="fullColumns">
+        id,
+        name,
+        parent_group_id,
+        level,
+        gmt_create,
+        gmt_modified
+    </sql>
+
+
+    <select id="getAllArticleGroup"  resultMap="ArticleGroupMap" >
+        SELECT
+        id,
+        name,
+        parent_group_id,
+        level
+        FROM article_group
+    </select>
+
+    <insert id="addArticleGroup" parameterType="ArticleGroup" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO article_group(
+        id,
+        name,
+        parent_group_id,
+        level,
+        gmt_create,
+        gmt_modified
+        )
+        VALUES(#{id},#{name},#{parentGroupId},#{level},#{gmtCreate},#{gmtModified})
+    </insert>
+
+    <update id="updateArticleGroup" parameterType="ArticleGroup">
+        UPDATE article_group
+        SET name = #{name}, parent_group_id = #{parentGroupId}, level = #{level}, gmt_modified = #{gmtModified}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteArticleGroup" parameterType="Long">
+        DELETE FROM article_group
+        WHERE id = #{id}
+    </delete>
+</mapper>
