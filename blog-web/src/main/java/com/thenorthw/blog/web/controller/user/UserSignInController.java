@@ -10,12 +10,14 @@ import com.thenorthw.blog.web.service.account.AccountService;
 import com.thenorthw.blog.web.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 /**
  * Created by theNorthW on 03/05/2017.
@@ -49,7 +51,7 @@ public class UserSignInController {
 
     @RequestMapping(value = "/user/self",method = RequestMethod.GET)
     @ResponseBody
-    public ResponseModel userSigninThroughWeb(UserLoginForm userLoginForm){
+    public ResponseModel userSigninThroughWeb(@Valid UserLoginForm userLoginForm, BindingResult bindingResult){
         ResponseModel responseModel = new ResponseModel();
         Account account = null;
         User user = null;
@@ -63,6 +65,7 @@ public class UserSignInController {
 
             if(account == null){
                 responseModel.setResponseCode(ResponseCode.NO_SUCH_ACCOUNT.getCode());
+                responseModel.setMessage(ResponseCode.NO_SUCH_ACCOUNT.getMessage());
             }else {
                 user = userService.userLogin(userLoginForm.getLoginname(),userLoginForm.getPassword(),httpServletResponse);
 
@@ -72,9 +75,8 @@ public class UserSignInController {
                 }else {
                     //在session中放入accountId
                     httpServletRequest.getSession().setAttribute(BlogConstant.ACCOUNT_ID,user.getId());
+                    responseModel.setData(user);
                 }
-
-
             }
         }else if(userLoginForm.getLogintype() == 2){
             //使用手机号进行登录
@@ -83,9 +85,6 @@ public class UserSignInController {
             //Todo: 手机号登录步骤还未操作
         }
 
-
-
-        responseModel.setData(user);
         return responseModel;
     }
 

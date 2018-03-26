@@ -50,9 +50,7 @@
         SELECT
         `id`,
         `nick`,
-        `avatar`,
-        `introduction`,
-        `background_img`
+        `avatar`
         FROM user WHERE id IN
         <foreach collection="userIds" item="id" open="(" close=")"
                  separator=",">

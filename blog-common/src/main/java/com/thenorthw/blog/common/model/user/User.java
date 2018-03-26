@@ -18,7 +18,7 @@ public class User {
     Date gmtCreate;
     Date gmtModified;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -34,7 +34,7 @@ public class User {
         this.nick = nick;
     }
 
-    public int getSex() {
+    public Integer getSex() {
         return sex;
     }
 

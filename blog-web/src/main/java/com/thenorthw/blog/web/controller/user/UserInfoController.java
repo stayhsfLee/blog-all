@@ -2,18 +2,21 @@ package com.thenorthw.blog.web.controller.user;
 
 import com.thenorthw.blog.common.ResponseCode;
 import com.thenorthw.blog.common.ResponseModel;
+import com.thenorthw.blog.common.annotation.LoginNeed;
 import com.thenorthw.blog.common.constants.BlogConstant;
 import com.thenorthw.blog.common.model.user.User;
-import com.thenorthw.blog.face.form.user.UserInfoFetchForm;
 import com.thenorthw.blog.face.form.user.UserInfoUpdateForm;
+import com.thenorthw.blog.face.form.user.UserInfosFetchForm;
 import com.thenorthw.blog.web.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -40,12 +43,11 @@ public class UserInfoController {
      * 用过user_id去识别user? - 现阶段还是用这个去识别
      * @return 不会反悔用户的详细信息,只会返回头像,名称,个人介绍等信息.
      */
-    @RequestMapping(value = "/user/info",method = RequestMethod.GET)
+    @RequestMapping(value = "/user/infos",method = RequestMethod.GET)
     @ResponseBody
-    public Object getUserInfo(UserInfoFetchForm userInfoFetchForm){
-        //该方法只需要传入这一个参数即可
-        //该方法接受list格式的id数据
-        String userId = userInfoFetchForm.getUserId();
+    public ResponseModel getUserInfos(@Valid UserInfosFetchForm userInfosFetchForm, BindingResult bindingResult){
+        //该方法只接受list格式的id数据
+        String userId = userInfosFetchForm.getUserIds();
 
         ResponseModel responseModel = new ResponseModel();
 
@@ -53,42 +55,37 @@ public class UserInfoController {
         //如果是list,则表示一般不是个人主页等页面,所以需要简洁信息即可
         String[] strings = userId.split(",");
 
-        if(strings.length == 1){
-            User user = userService.getUserProfileByUserId(Long.parseLong(strings[0]));
-            //不需要详细信息
-            user.setGmtCreate(null);
-            user.setGmtModified(null);
-            responseModel.setData(user);
-        }else {
-            //只需要返回user_id,用户名,头像即可
-            List<User> res = userService.getUserProfileByUserIds(strings);
-            responseModel.setData(res);
-        }
+
+        //只需要返回user_id,用户名,头像即可
+        List<User> res = userService.getUserProfileByUserIds(strings);
+        System.out.println(res.size());
+        responseModel.setData(res);
 
         return responseModel;
     }
 
-    @RequestMapping(value = "/user/info/{userId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{userId}",method = RequestMethod.GET)
     @ResponseBody
-    public Object getSomeOneUserInfo(@PathVariable(value = "userId")String userId){
+    public ResponseModel getSomeOneUserInfo(@PathVariable(value = "userId")String userId){
         //该方法只需要传入这一个参数即可
         //该方法接受list格式的id数据
         ResponseModel responseModel = new ResponseModel();
 
         //判断是否为list格式 - list格式采用#进行user_id之间的划分
         //如果是list,则表示一般不是个人主页等页面,所以需要简洁信息即可
-        String[] strings = userId.split(",");
 
-        if(strings.length == 1){
-            User user = userService.getUserProfileByUserId(Long.parseLong(strings[0]));
+
+        if(userId.matches("\\w+")) {
+            User user = userService.getUserProfileByUserId(Long.parseLong(userId));
             //不需要详细信息
-            user.setGmtCreate(null);
-            user.setGmtModified(null);
-            responseModel.setData(user);
+            if (user != null) {
+                user.setGmtCreate(null);
+                user.setGmtModified(null);
+                responseModel.setData(user);
+            }
         }else {
-            //只需要返回user_id,用户名,头像即可
-            List<User> res = userService.getUserProfileByUserIds(strings);
-            responseModel.setData(res);
+            responseModel.setResponseCode(ResponseCode.PARAMETER_ERROR.getCode());
+            responseModel.setMessage(ResponseCode.PARAMETER_ERROR.getMessage());
         }
 
         return responseModel;
@@ -101,9 +98,9 @@ public class UserInfoController {
      */
     @RequestMapping(value = "/user/info/me",method = RequestMethod.GET)
     @ResponseBody
-    public Object getUserSelfInfo(){
+    @LoginNeed
+    public ResponseModel getUserSelfInfo(){
         ResponseModel responseModel = new ResponseModel();
-
 
         User res = userService.getUserProfileByUserId((Long)httpServletRequest.getSession().getAttribute(BlogConstant.ACCOUNT_ID));
 
@@ -121,16 +118,20 @@ public class UserInfoController {
 
     @RequestMapping(value = "/user/info" , method = RequestMethod.POST)
     @ResponseBody
-    public String updateUserProfile(UserInfoUpdateForm userInfoUpdateForm){
+    @LoginNeed
+    public ResponseModel updateUserProfile(@Valid UserInfoUpdateForm userInfoUpdateForm, BindingResult bindingResult){
         String nickname = userInfoUpdateForm.getNick();
         String sex = userInfoUpdateForm.getSex();
         String introduction = userInfoUpdateForm.getIntroduction();
 
         ResponseModel responseModel = new ResponseModel();
 
+        Long userId = (Long)httpServletRequest.getSession().getAttribute(BlogConstant.ACCOUNT_ID);
+
+
         //创建User实例
         User user = new User();
-        user.setId((Long)httpServletRequest.getSession().getAttribute(BlogConstant.ACCOUNT_ID));       //从token中知晓user_id
+        user.setId(userId);       //从token中知晓user_id
         user.setNick(nickname);
         user.setSex(Integer.parseInt(sex));
         user.setIntroduction(introduction);
@@ -144,7 +145,7 @@ public class UserInfoController {
             responseModel.setMessage("Update failed");
         }
 
-        return responseModel.toString();
+        return responseModel;
     }
 
     /**

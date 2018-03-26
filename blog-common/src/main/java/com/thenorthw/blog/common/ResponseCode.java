@@ -18,6 +18,8 @@ public enum ResponseCode {
 
     INTERNAL_SERVER_ERROR(500,"internal server error"),
 
+    //parameter invalid
+    PARAMETER_ERROR(999,"The http request parameters are wrong."),
 
 
     //user & account

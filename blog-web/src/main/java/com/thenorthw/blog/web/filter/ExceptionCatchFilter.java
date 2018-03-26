@@ -33,7 +33,7 @@ public class ExceptionCatchFilter implements Filter{
                 logger.error("exception happen, please locate the error and fix it.", t);
                 ResponseModel<String> res = new ResponseModel<String>();
                 res.setResponseCode(ResponseCode.INTERNAL_SERVER_ERROR.getCode());
-                res.setMessage(t.getMessage());
+                res.setMessage(ResponseCode.INTERNAL_SERVER_ERROR.getMessage());
                 res.setData(null);
                 OutputStream outputStream = servletResponse.getOutputStream();
                 outputStream.write(JsonUtil.beanToJson(res).getBytes());
@@ -43,20 +43,22 @@ public class ExceptionCatchFilter implements Filter{
                 logger.error("exception happen, please locate the error and fix it.",t);
                 ResponseModel<String> res = new ResponseModel<String>();
                 res.setResponseCode(ResponseCode.INTERNAL_SERVER_ERROR.getCode());
-                res.setMessage(t.getMessage());
                 res.setData(null);
+                res.setMessage(ResponseCode.INTERNAL_SERVER_ERROR.getMessage());
                 OutputStream outputStream = servletResponse.getOutputStream();
                 outputStream.write(JsonUtil.beanToJson(res).getBytes());
                 outputStream.flush();
+                outputStream.close();
             }else {
                 logger.error("exception happen, please locate the error and fix it.",t);
                 ResponseModel<String> res = new ResponseModel<String>();
-                res.setResponseCode(ResponseCode.INTERNAL_SERVER_ERROR.getCode());
-                res.setMessage(t.getMessage());
                 res.setData(null);
+                res.setResponseCode(ResponseCode.INTERNAL_SERVER_ERROR.getCode());
+                res.setMessage(ResponseCode.INTERNAL_SERVER_ERROR.getMessage());
                 OutputStream outputStream = servletResponse.getOutputStream();
                 outputStream.write(JsonUtil.beanToJson(res).getBytes());
                 outputStream.flush();
+                outputStream.close();
             }
         }
     }

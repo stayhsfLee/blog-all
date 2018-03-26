@@ -1,6 +1,7 @@
 package com.thenorthw.blog.web.service.user;
 
 import com.thenorthw.blog.common.model.user.User;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletResponse;
 import java.util.List;
@@ -25,5 +26,5 @@ public interface UserService {
 
     public int updateUserAvatar(byte[] avatarBytes, Long userId);
 
-    List<User> getUserProfileByUserIds(String[] userIds);
+    List<User> getUserProfileByUserIds(@RequestParam("userIds") String[] userIds);
 }

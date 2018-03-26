@@ -52,8 +52,6 @@ public class UserSignUpController {
         //如果创建成功,返回创建好的user记录的user_id
         int result = 0;
 
-        System.out.println(bindingResult.hasErrors());
-
         //判断注册类型是普通用户还是店铺 - 注册类型默认为false
         result = accountService.createNormalUserAccount(createForm);
 
