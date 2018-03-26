@@ -18,10 +18,10 @@ import java.util.List;
  */
 @Service
 public class TagServiceImpl implements TagService {
-	@Autowired
+//	@Autowired
 	TagDao tagDao;
-	@Autowired
-	RArticleTagDao rArticleTagDao;
+//	@Autowired
+//	RArticleTagDao rArticleTagDao;
 
 	public static List<Tag> tags = null;
 
@@ -82,7 +82,7 @@ public class TagServiceImpl implements TagService {
 					iterator.remove();
 
 					//删除相关map
-					rArticleTagDao.deleteRByTagId(id);
+//					rArticleTagDao.deleteRByTagId(id);
 					return 0;
 				}
 			}

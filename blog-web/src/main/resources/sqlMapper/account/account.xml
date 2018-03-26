@@ -2,7 +2,7 @@
         <!DOCTYPE mapper
                 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.northw.blog.common.dao.account.AccountDao">
+<mapper namespace="com.thenorthw.blog.common.dao.account.AccountDao">
     <resultMap id="AccountMap" type="Account">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
@@ -47,11 +47,11 @@
     </insert>
 
     <!--获得信息-->
-    <select id="getAccountByLoginname" parameterType="string" resultMap="AccountMap">
+    <select id="getAccountByName" parameterType="string" resultMap="AccountMap">
       SELECT
       <include refid="fullColumns"/>
       FROM account
-      WHERE name=#{name}
+      WHERE name = #{name}
     </select>
 
     <select id="getAccountByAccountId" parameterType="int" resultMap="AccountMap">
@@ -61,12 +61,12 @@
         WHERE id = #{id}
     </select>
 
-    <select id="getAccountByWeChatId" parameterType="string" resultMap="AccountMap">
-        SELECT
-        <include refid="fullColumns"/>
-        FROM account
-        WHERE wechat_id = #{openId};
-    </select>
+    <!--<select id="getAccountByWeChatId" parameterType="string" resultMap="AccountMap">-->
+        <!--SELECT-->
+        <!--<include refid="fullColumns"/>-->
+        <!--FROM account-->
+        <!--WHERE wechat_id = #{openId};-->
+    <!--</select>-->
 
 
     <!--更新信息-->

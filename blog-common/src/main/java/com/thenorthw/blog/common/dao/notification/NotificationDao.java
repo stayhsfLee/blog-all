@@ -11,7 +11,6 @@ import java.util.List;
  * @date 12/10/2017.
  * blog: theNorthW.net
  */
-@Repository
 public interface NotificationDao {
 	public List<Notification> getNotifications(@Param("limit") int limit);
 

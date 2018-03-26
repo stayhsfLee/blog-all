@@ -44,10 +44,10 @@
     <mappers>
         <mapper resource="sqlMapper/account/account.xml"/>
         <mapper resource="sqlMapper/user/user.xml"/>
-        <mapper resource="sqlMapper/group/articlegroup.xml"/>
-        <mapper resource="sqlMapper/group/rarticlearticlegroup.xml"/>
+        <!--<mapper resource="sqlMapper/group/articlegroup.xml"/>-->
+        <!--<mapper resource="sqlMapper/group/rarticlearticlegroup.xml"/>-->
 
-        <mapper resource="sqlMapper/notification/notification.xml"/>
+        <!--<mapper resource="sqlMapper/notification/notification.xml"/>-->
     </mappers>
 
 

@@ -1,6 +1,7 @@
 package com.thenorthw.blog.common.dao.article;
 
 import com.thenorthw.blog.common.model.article.ArticleContent;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

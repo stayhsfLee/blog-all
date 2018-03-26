@@ -7,12 +7,15 @@ import com.thenorthw.blog.web.service.account.AccountService;
 import com.thenorthw.blog.web.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 /**
  * Created by theNorthW on 03/05/2017.
@@ -25,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 @SuppressWarnings("ALL")
 @Controller
 @RequestMapping("/web/v1")
-public class UserRegisterController {
+public class UserSignUpController {
     @Autowired
     HttpServletRequest httpServletRequest;
     @Autowired
@@ -43,11 +46,13 @@ public class UserRegisterController {
      */
     @RequestMapping(value = "/user",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseModel registerUser(UserRegisterForm createForm){
+    public ResponseModel signup(@Valid UserRegisterForm createForm, BindingResult bindingResult){
         ResponseModel responseModel = new ResponseModel();
 
         //如果创建成功,返回创建好的user记录的user_id
         int result = 0;
+
+        System.out.println(bindingResult.hasErrors());
 
         //判断注册类型是普通用户还是店铺 - 注册类型默认为false
         result = accountService.createNormalUserAccount(createForm);
@@ -59,7 +64,6 @@ public class UserRegisterController {
             responseModel.setResponseCode(ResponseCode.EXISTED_USER.getCode());
             responseModel.setMessage("Error:existed user.");
         }
-
 
         //返回创建好的User信息,并且默认已经登录,返回头上加上token
         //AuthorizedToken token = ZeusLc.login(createForm.getLoginname(),createForm.getPassword(),httpServletResponse);

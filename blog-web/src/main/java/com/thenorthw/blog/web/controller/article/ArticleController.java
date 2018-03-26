@@ -83,7 +83,7 @@ public class ArticleController {
 		return responseModel;
 	}
 
-	@RequestMapping(value = "/article",method = RequestMethod.POST)
+	@RequestMapping(value = "/article/update",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseModel updateArticle(ArticleUpdateForm articleUpdateForm){
 		ResponseModel responseModel = new ResponseModel();

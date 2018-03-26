@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.thenorthw.blog.common.dao.group.ArticleGroupDao">
+<mapper namespace="com.thenorthw.blog.common.dao.group.RArticleArticleGroupDao">
 
     <resultMap id="RArticleArticleGroupMap" type="RArticleArticleGroup">
         <id column="id" property="id" jdbcType="BIGINT"/>
@@ -23,7 +23,7 @@
     </sql>
 
 
-    <select id="getAllArticleGroup"  resultMap="ArticleGroupMap" >
+    <select id="getAllArticleGroup"  resultMap="RArticleArticleGroupMap" >
         SELECT
         id,
         name,

@@ -1,0 +1,17 @@
+2018/3/24
+-------
+
+1. 凌晨01：43，开始完成初步account模块 启动完成，可以和前端开始嵌合了。
+
+2018/3/25
+--------
+
+1. 8:33 开始使用validator来验证客户端参数传入
+2. 9:50 未完成 可能是aop配置不正确，validator配置不正确
+3. 接下来目标，首先搞定aop，然后尝试validator
+
+2018/3/26
+
+1. 11:00 开始完成validator配置
+2. 12:26 搞定aop和validator，aop是因为around不对，validator是因为spring.xml需要加一个bean来让spring知道validator是哪个
+3. 13:01 大意导致多花了半小时的时间

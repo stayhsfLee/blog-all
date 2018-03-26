@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping(value = "/web/v1")
-public class UserLoginController {
+public class UserSignInController {
     @Autowired
     HttpServletRequest httpServletRequest;
     @Autowired
@@ -49,7 +49,7 @@ public class UserLoginController {
 
     @RequestMapping(value = "/user/self",method = RequestMethod.GET)
     @ResponseBody
-    public ResponseModel userLoginThroughWeb(UserLoginForm userLoginForm){
+    public ResponseModel userSigninThroughWeb(UserLoginForm userLoginForm){
         ResponseModel responseModel = new ResponseModel();
         Account account = null;
         User user = null;
@@ -69,7 +69,12 @@ public class UserLoginController {
                 if(user == null){
                     responseModel.setResponseCode(ResponseCode.LOGIN_FAIL.getCode());
                     responseModel.setMessage(ResponseCode.LOGIN_FAIL.getMessage());
+                }else {
+                    //在session中放入accountId
+                    httpServletRequest.getSession().setAttribute(BlogConstant.ACCOUNT_ID,user.getId());
                 }
+
+
             }
         }else if(userLoginForm.getLogintype() == 2){
             //使用手机号进行登录
@@ -78,8 +83,7 @@ public class UserLoginController {
             //Todo: 手机号登录步骤还未操作
         }
 
-        //在session中放入accountId
-        httpServletRequest.getSession().setAttribute(BlogConstant.ACCOUNT_ID,user.getId());
+
 
         responseModel.setData(user);
         return responseModel;

@@ -102,7 +102,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public Account getAccountByName(String name) {
-        return accountDao.getAccountByLoginname(name);
+        return accountDao.getAccountByName(name);
     }
 
     public int updateLoginTime(Account account) {

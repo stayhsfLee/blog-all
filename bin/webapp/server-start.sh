@@ -26,7 +26,7 @@ function printDebugInfo()
 {
     HOSTNAME=`hostname`;
     IP=`ping ${HOSTNAME} -c 1 | grep PING | awk '{len=length($3)-2;print substr($3,2,len);}'` ||IP="Unknown local ip"
-    echo "debug mode, localIp:"${IP}" port:3301"
+    echo "debug mode, localIp:"${IP}" port:1818"
 }
 
 function usage()

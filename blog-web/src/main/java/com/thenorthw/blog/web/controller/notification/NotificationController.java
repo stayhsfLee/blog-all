@@ -75,7 +75,7 @@ public class NotificationController {
 	 *
 	 * @return
 	 */
-	@RequestMapping(value = "notification", method = RequestMethod.GET)
+	@RequestMapping(value = "notification", method = RequestMethod.DELETE)
 	@ResponseBody
 	public ResponseModel deleteNotifications(Long id){
 		ResponseModel responseModel = new ResponseModel();

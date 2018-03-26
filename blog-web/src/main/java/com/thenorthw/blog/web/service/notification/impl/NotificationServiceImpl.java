@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class NotificationServiceImpl implements NotificationService {
 
-	@Autowired
+//	@Autowired
 	NotificationDao notificationDao;
 
 	public List<Notification> getRecentNotifications(int limit) {

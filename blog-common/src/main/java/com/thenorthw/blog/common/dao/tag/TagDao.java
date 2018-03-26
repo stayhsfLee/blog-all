@@ -10,9 +10,9 @@ import java.util.List;
  * blog: thenorthw.com
  */
 public interface TagDao {
-	public List<Tag> getAllTags();
+	public abstract List<Tag> getAllTags();
 
-	public int addTag(Tag tag);
+	public abstract int addTag(Tag tag);
 
-	public int deleteTag(Long id);
+	public abstract int deleteTag(Long id);
 }

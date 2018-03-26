@@ -23,13 +23,13 @@ import java.util.Map;
  */
 @Service
 public class ArticleServiceImpl implements ArticleService {
-	@Autowired
+//	@Autowired
 	ArticleDao articleDao;
-	@Autowired
+//	@Autowired
 	ArticleContentDao articleContentDao;
-	@Autowired
-	RArticleTagDao rArticleTagDao;
-	@Autowired
+//	@Autowired
+//	RArticleTagDao rArticleTagDao;
+//	@Autowired
 	RArticleArticleGroupDao rArticleArticleGroupDao;
 
 
@@ -129,7 +129,7 @@ public class ArticleServiceImpl implements ArticleService {
 		articleDao.deleteArticle(id);
 		articleContentDao.deleteArticleContent(id);
 		rArticleArticleGroupDao.deleteRByArticleId(id);
-		rArticleTagDao.deleteRByArticleId(id);
+//		rArticleTagDao.deleteRByArticleId(id);
 		return 0;
 	}
 

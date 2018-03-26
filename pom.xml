@@ -19,8 +19,15 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <logback.version>1.2.3</logback.version>
-    <jetty.version>9.4.8.v20171121</jetty.version>
+    <logback-ext-spring.version>0.1.1</logback-ext-spring.version>
+    <jetty.version>9.0.7.v20131107</jetty.version>
     <spring.version>4.2.5.RELEASE</spring.version>
+    <jackson.version>2.9.4</jackson.version>
+    <hibernate-validator.version>6.0.7.Final</hibernate-validator.version>
+    <aspectj.version>1.6.12</aspectj.version>
+    <cglib.version>2.2</cglib.version>
+    <javax.el.version>3.0.1-b04</javax.el.version>
+    <el-impl.version>2.2</el-impl.version>
     <gson.version>2.6.2</gson.version>
 
     <mybatis.version>3.4.1</mybatis.version>
@@ -30,6 +37,10 @@
 
     <mysql.version>5.1.38</mysql.version>
     <c3p0.version>0.9.1.2</c3p0.version>
+
+    <servlet.version>2.5</servlet.version>
+
+
   </properties>
 
   <dependencyManagement>
@@ -71,6 +82,79 @@
         <artifactId>spring-jdbc</artifactId>
         <version>${spring.version}</version>
       </dependency>
+      <!--jackson和spring联合使用，看spring.xml-->
+      <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+      <dependency>
+        <groupId>org.hibernate.validator</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>${hibernate-validator.version}</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>${hibernate-validator.version}</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aop</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjrt</artifactId>
+        <version>${aspectj.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjweaver</artifactId>
+        <version>${aspectj.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>cglib</groupId>
+        <artifactId>cglib</artifactId>
+        <version>${cglib.version}</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/javax.el/javax.el-api -->
+      <dependency>
+        <groupId>javax.el</groupId>
+        <artifactId>javax.el-api</artifactId>
+        <version>${javax.el.version}</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.glassfish.web/el-impl -->
+      <dependency>
+        <groupId>org.glassfish.web</groupId>
+        <artifactId>el-impl</artifactId>
+        <version>${el-impl.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+
+
+
+
+
+
+
+      <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+      <dependency>
+        <groupId>commons-fileupload</groupId>
+        <artifactId>commons-fileupload</artifactId>
+        <version>${common-fileupload.version}</version>
+      </dependency>
+
 
       <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
       <dependency>
@@ -103,13 +187,19 @@
       <dependency>
         <groupId>org.logback-extensions</groupId>
         <artifactId>logback-ext-spring</artifactId>
-        <version>0.1.1</version>
+        <version>${logback-ext-spring.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.google.code.gson</groupId>
         <artifactId>gson</artifactId>
         <version>${gson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>${servlet.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

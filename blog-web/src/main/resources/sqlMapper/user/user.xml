@@ -33,7 +33,7 @@
         `background_img`,
         `gmt_create`,
         `gmt_modified`)
-      VALUES (#{id},#{nickname},#{sex},#{introduction},#{avatar},#{backgroundImg},#{gmtCreate},#{gmtModified})
+      VALUES (#{id},#{nick},#{sex},#{introduction},#{avatar},#{backgroundImg},#{gmtCreate},#{gmtModified})
     </insert>
 
     <!--获得信息-->
@@ -59,8 +59,8 @@
             #{id}
         </foreach>
     </select>
-    <!--<select id="getUserByNickname" parameterType="string" resultType="User">-->
-        <!--select * from user_profile where nickname=#{nickname}-->
+    <!--<select id="getUserByNick" parameterType="string" resultType="User">-->
+        <!--select * from user_profile where nick=#{nick}-->
     <!--</select>-->
 
     <!--更新信息-->

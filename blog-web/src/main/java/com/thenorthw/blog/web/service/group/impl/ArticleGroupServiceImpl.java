@@ -24,10 +24,10 @@ public class ArticleGroupServiceImpl implements ArticleGroupService {
 	private static Logger logger = LoggerFactory.getLogger(ArticleGroupServiceImpl.class);
 
 
-	@Autowired
+//	@Autowired
 	ArticleGroupDao articleGroupDao;
-	@Autowired
-	RArticleArticleGroupDao articleArticleGroupDao;
+//	@Autowired
+//	RArticleArticleGroupDao articleArticleGroupDao;
 
 	//group cache
 	public static List<ArticleGroup> articleGroups = null;
@@ -186,7 +186,7 @@ public class ArticleGroupServiceImpl implements ArticleGroupService {
 					its.remove();
 
 					//删除相关article和group的map
-					int result1 = articleArticleGroupDao.deleteRByGroupId(id);
+//					int result1 = articleArticleGroupDao.deleteRByGroupId(id);
 					break;
 				}
 			}

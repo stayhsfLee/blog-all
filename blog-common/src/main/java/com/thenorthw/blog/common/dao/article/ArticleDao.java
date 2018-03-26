@@ -11,7 +11,6 @@ import java.util.List;
  * @date 20/09/2017.
  * blog: thenorthw.com
  */
-@Repository
 public interface ArticleDao {
 	/**
 	 * 按照最近时间顺序获取limit文章
@@ -31,8 +30,6 @@ public interface ArticleDao {
 	 * @return
 	 */
 	public int postArticle(Article article);
-
-
 
 	public int updateContent(Article article);
 

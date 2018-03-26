@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans.xsd
           http://www.springframework.org/schema/mvc
@@ -11,7 +11,7 @@
           http://www.springframework.org/schema/context
           http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx.xsd">
+        http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- data source with mysql -->
     <context:property-placeholder location="classpath:jdbc.properties" />
@@ -98,7 +98,7 @@
     <!--</mvc:annotation-driven>-->
     <!--<mvc:default-servlet-handler/>-->
 
-    <mvc:annotation-driven conversion-service="conversionService">
+    <mvc:annotation-driven conversion-service="conversionService" validator="validator">
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                 <property name="supportedMediaTypes">
@@ -119,6 +119,28 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
     <mvc:default-servlet-handler/>
+
+    <bean id="validator"
+          class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <!-- hibernate校验器-->
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+        <!-- 指定校验使用的资源文件，在文件中配置校验错误信息，如果不指定则默认使用classpath下的ValidationMessages.properties -->
+        <!--<property name="validationMessageSource" ref="messageSource" />-->
+    </bean>
+    <!-- 校验错误信息配置文件 -->
+    <!--<bean id="messageSource"-->
+          <!--class="org.springframework.context.support.ReloadableResourceBundleMessageSource">-->
+        <!--&lt;!&ndash; 资源文件名&ndash;&gt;-->
+        <!--<property name="basenames">-->
+            <!--<list>-->
+                <!--<value>classpath:CustomValidationMessages</value>-->
+            <!--</list>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 资源文件编码格式 &ndash;&gt;-->
+        <!--<property name="fileEncodings" value="utf-8" />-->
+        <!--&lt;!&ndash; 对资源文件内容缓存时间，单位秒 &ndash;&gt;-->
+        <!--<property name="cacheSeconds" value="120" />-->
+    <!--</bean>-->
 
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="converters">
@@ -146,10 +168,13 @@
 
     <!--spring注解扫描-->
     <context:annotation-config/>
+    <!--激活aop-->
+    <aop:aspectj-autoproxy/>
 
     <context:component-scan base-package="com.thenorthw.blog.web">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
     </context:component-scan>
 
 
